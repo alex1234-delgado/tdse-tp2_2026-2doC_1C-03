@@ -1,0 +1,3 @@
+../app/src/task_actuator.c:75:6:task_actuator_init	72	static,ignoring_inline_asm
+../app/src/task_actuator.c:118:6:task_actuator_update	24	static
+../app/src/task_actuator.c:129:6:task_actuator_statechart	24	static
