@@ -1,4 +1,0 @@
-../app/src/task_system_interface.c:71:6:init_event_task_system	2
-../app/src/task_system_interface.c:83:6:put_event_task_system	2
-../app/src/task_system_interface.c:92:18:get_event_task_system	2
-../app/src/task_system_interface.c:106:6:any_event_task_system	1
