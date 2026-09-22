@@ -50,8 +50,10 @@ typedef enum task_sensor_ev {EV_BTN_UP,
 							 EV_BTN_DOWN} task_sensor_ev_t;
 
 /* States of Task Sensor */
-typedef enum task_sensor_st {ST_BTN_IDLE,
-							 ST_BTN_ACTIVE} task_sensor_st_t;
+typedef enum task_sensor_st {ST_BTN_UP,
+							 ST_BTN_DOWN,
+	                         ST_BTN_RISING,
+							 ST_BTN_FALLING} task_sensor_st_t;
 
 /* Identifier of Task Sensor */
 typedef enum task_sensor_id {ID_BTN_A} task_sensor_id_t;
