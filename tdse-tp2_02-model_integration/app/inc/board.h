@@ -65,19 +65,42 @@ extern "C" {
 
 /* STM32 Nucleo Boards - 64 Pins */
 #if ((BOARD == NUCLEO_F103RC) || (BOARD == NUCLEO_F401RE) || (BOARD == NUCLEO_F446RE))
-
-#define BTN_A_PIN		B1_Pin
-#define BTN_A_PORT		B1_GPIO_Port
+#define BTN_A_PIN		EXT_BTN_A_Pin
+#define BTN_A_PORT		EXT_BTN_A_GPIO_Port
 #define BTN_A_PRESSED	GPIO_PIN_RESET
 #define BTN_A_HOVER		GPIO_PIN_SET
+
+/* USER CODE BEGIN Private defines */
+#define BTN_B_PIN       EXT_BTN_B_Pin
+#define BTN_B_PORT		EXT_BTN_B_GPIO_Port
+#define BTN_B_PRESSED	GPIO_PIN_RESET
+#define BTN_B_HOVER		GPIO_PIN_SET
+
+#define BTN_C_PIN		EXT_BTN_C_Pin
+#define BTN_C_PORT		EXT_BTN_C_GPIO_Port
+#define BTN_C_PRESSED	GPIO_PIN_RESET
+#define BTN_C_HOVER		GPIO_PIN_SET
+/* USER CODE BEGIN Private defines */
 
 #define BTN_PRESSED		BTN_A_PRESSED
 #define BTN_HOVER		BTN_A_HOVER
 
-#define LED_A_PIN		LD2_Pin
-#define LED_A_PORT		LD2_GPIO_Port
+/* USER CODE BEGIN Private defines */
+#define LED_A_PIN		EXT_LED_A_Pin
+#define LED_A_PORT		EXT_LED_A_GPIO_Port
 #define LED_A_ON		GPIO_PIN_SET
 #define LED_A_OFF		GPIO_PIN_RESET
+
+#define LED_B_PIN		EXT_LED_B_Pin
+#define LED_B_PORT		EXT_LED_B_GPIO_Port
+#define LED_B_ON		GPIO_PIN_SET
+#define LED_B_OFF		GPIO_PIN_RESET
+
+#define LED_C_PIN		EXT_LED_A_Pin
+#define LED_C_PORT		EXT_LED_A_GPIO_Port
+#define LED_C_ON		GPIO_PIN_SET
+#define LED_C_OFF		GPIO_PIN_RESET
+/* USER CODE BEGIN Private defines */
 
 #define LED_ON			LED_A_ON
 #define LED_OFF			LED_A_OFF
