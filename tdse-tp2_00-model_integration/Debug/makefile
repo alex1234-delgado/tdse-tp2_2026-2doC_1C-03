@@ -61,8 +61,8 @@ all: main-build
 main-build: tdse-tp2_00-model_integration.elf secondary-outputs
 
 # Tool invocations
-tdse-tp2_00-model_integration.elf tdse-tp2_00-model_integration.map: $(OBJS) $(USER_OBJS) /home/anonymus/STM32CubeIDE/workspace_1.19.0/tdse-workspace/tdse-tp2_00-model_integration/STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "tdse-tp2_00-model_integration.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/anonymus/STM32CubeIDE/workspace_1.19.0/tdse-workspace/tdse-tp2_00-model_integration/STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tdse-tp2_00-model_integration.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+tdse-tp2_00-model_integration.elf tdse-tp2_00-model_integration.map: $(OBJS) $(USER_OBJS) /home/anonymus/STM32CubeIDE/workspace_1.19.0/tdse-workspace/tdse-tp2/tdse-tp2_00-model_integration/STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "tdse-tp2_00-model_integration.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/anonymus/STM32CubeIDE/workspace_1.19.0/tdse-workspace/tdse-tp2/tdse-tp2_00-model_integration/STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tdse-tp2_00-model_integration.map" -Wl,--gc-sections -static -specs=rdimon.specs --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
