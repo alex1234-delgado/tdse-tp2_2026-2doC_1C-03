@@ -46,12 +46,8 @@ extern "C" {
 
 /********************** typedef **********************************************/
 /* Events to excite Task System */
-typedef enum task_system_ev {EV_SYS_BTN_A_IDLE,
-	EV_SYS_BTN_A_ACTIVE,
-	EV_SYS_BTN_B_IDLE,
-	EV_SYS_BTN_B_ACTIVE,
-	EV_SYS_BTN_C_IDLE,
-	EV_SYS_BTN_C_ACTIVE} task_system_ev_t;
+typedef enum task_system_ev {EV_SYS_IDLE,
+							 EV_SYS_ACTIVE} task_system_ev_t;
 
 /* State of Task System */
 typedef enum task_system_st {ST_SYS_IDLE,

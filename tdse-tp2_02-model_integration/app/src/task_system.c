@@ -99,11 +99,15 @@ void task_system_init(void *parameters)
 		/* Update Task System Data Pointer */
 		p_task_system_dta = &task_system_dta_list[index];
 
+		/* Init & Print out: Task execution FSM */
+		state = ST_SYS_IDLE;
+		p_task_system_dta->state = state;
 
-		p_task_system_dta->tick = 0;
-		p_task_system_dta->state = ST_SYS_IDLE;
-		p_task_system_dta->event = EV_SYS_BTN_A_IDLE;
-		p_task_system_dta->flag = false;
+		event = EV_SYS_IDLE;
+		p_task_system_dta->event = event;
+
+		b_event = false;
+		p_task_system_dta->flag = b_event;
 
 		LOGGER_INFO(" ");
 		LOGGER_INFO("   %s = %lu   %s = %lu   %s = %s",
@@ -147,42 +151,38 @@ void task_system_normal_statechart(void)
 		p_task_system_dta->event = get_event_task_system();
 	}
 
-	if (true == p_task_system_dta->flag)
+	switch (p_task_system_dta->state)
 	{
-		p_task_system_dta->flag = false; /* Consumimos el evento */
+		case ST_SYS_IDLE:
 
-		switch (p_task_system_dta->event)
-		{
-			/* --- BOTÓN A -> Controla LED A --- */
-			case EV_SYS_BTN_A_ACTIVE:
+			if ((true == p_task_system_dta->flag) && (EV_SYS_ACTIVE == p_task_system_dta->event))
+			{
+				p_task_system_dta->flag = false;
 				put_event_task_actuator(EV_LED_ACTIVE, ID_LED_A);
-				break;
+				p_task_system_dta->state = ST_SYS_ACTIVE;
+			}
 
-			case EV_SYS_BTN_A_IDLE:
+			break;
+
+		case ST_SYS_ACTIVE:
+
+			if ((true == p_task_system_dta->flag) && (EV_SYS_IDLE == p_task_system_dta->event))
+			{
+				p_task_system_dta->flag = false;
 				put_event_task_actuator(EV_LED_IDLE, ID_LED_A);
-				break;
+				p_task_system_dta->state = ST_SYS_IDLE;
+			}
 
-				/* --- BOTÓN B -> Controla LED B --- */
-			case EV_SYS_BTN_B_ACTIVE:
-				put_event_task_actuator(EV_LED_ACTIVE, ID_LED_B);
-				break;
+			break;
 
-			case EV_SYS_BTN_B_IDLE:
-				put_event_task_actuator(EV_LED_IDLE, ID_LED_B);
-				break;
+		default:
 
-				/* --- BOTÓN C -> Controla LED C --- */
-			case EV_SYS_BTN_C_ACTIVE:
-				put_event_task_actuator(EV_LED_ACTIVE, ID_LED_C);
-				break;
+			p_task_system_dta->tick  = DEL_SYS_MIN;
+			p_task_system_dta->state = ST_SYS_IDLE;
+			p_task_system_dta->event = EV_SYS_IDLE;
+			p_task_system_dta->flag = false;
 
-			case EV_SYS_BTN_C_IDLE:
-				put_event_task_actuator(EV_LED_IDLE, ID_LED_C);
-				break;
-
-			default:
-				break;
-		}
+			break;
 	}
 }
 
