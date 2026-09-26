@@ -3370,12 +3370,12 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .text.task_system_get_id
                 0x08002300       0x54 ./app/src/task_system.o
                 0x08002300                task_system_get_id
- .text.task_system_update
-                0x08002354       0x78 ./app/src/task_system.o
-                0x08002354                task_system_update
  .text.task_system_statechart
-                0x080023cc      0x110 ./app/src/task_system.o
-                0x080023cc                task_system_statechart
+                0x08002354      0x110 ./app/src/task_system.o
+                0x08002354                task_system_statechart
+ .text.task_system_update
+                0x08002464       0x78 ./app/src/task_system.o
+                0x08002464                task_system_update
  .text.init_event_task_system
                 0x080024dc       0x48 ./app/src/task_system_interface.o
                 0x080024dc                init_event_task_system
@@ -3975,7 +3975,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp/libm.a
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7-m/nofp/libgcc.a
 
-.debug_info     0x00000000     0x84dc
+.debug_info     0x00000000     0x84c5
  .debug_info    0x00000000      0xb30 ./Core/Src/main.o
  .debug_info    0x00000b30      0x7f8 ./Core/Src/stm32f1xx_hal_msp.o
  .debug_info    0x00001328      0x152 ./Core/Src/stm32f1xx_it.o
@@ -3993,10 +3993,10 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_info    0x000073bf      0x47c ./app/src/task_actuator.o
  .debug_info    0x0000783b      0x1b0 ./app/src/task_actuator_interface.o
  .debug_info    0x000079eb      0x4e1 ./app/src/task_sensor.o
- .debug_info    0x00007ecc      0x435 ./app/src/task_system.o
- .debug_info    0x00008301      0x1db ./app/src/task_system_interface.o
+ .debug_info    0x00007ecc      0x41e ./app/src/task_system.o
+ .debug_info    0x000082ea      0x1db ./app/src/task_system_interface.o
 
-.debug_abbrev   0x00000000     0x1fdd
+.debug_abbrev   0x00000000     0x1fc2
  .debug_abbrev  0x00000000      0x266 ./Core/Src/main.o
  .debug_abbrev  0x00000266      0x1ab ./Core/Src/stm32f1xx_hal_msp.o
  .debug_abbrev  0x00000411       0xa1 ./Core/Src/stm32f1xx_it.o
@@ -4014,8 +4014,8 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_abbrev  0x0000176c      0x1ff ./app/src/task_actuator.o
  .debug_abbrev  0x0000196b       0xe7 ./app/src/task_actuator_interface.o
  .debug_abbrev  0x00001a52      0x213 ./app/src/task_sensor.o
- .debug_abbrev  0x00001c65      0x23a ./app/src/task_system.o
- .debug_abbrev  0x00001e9f      0x13e ./app/src/task_system_interface.o
+ .debug_abbrev  0x00001c65      0x21f ./app/src/task_system.o
+ .debug_abbrev  0x00001e84      0x13e ./app/src/task_system_interface.o
 
 .debug_aranges  0x00000000      0x780
  .debug_aranges

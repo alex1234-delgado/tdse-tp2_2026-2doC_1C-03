@@ -1,4 +1,4 @@
 ../app/src/task_system.c:82:6:task_system_init	3
 ../app/src/task_system.c:128:18:task_system_get_id	5
-../app/src/task_system.c:183:6:task_system_update	3
-../app/src/task_system.c:260:6:task_system_statechart	21
+../app/src/task_system.c:241:6:task_system_statechart	21
+../app/src/task_system.c:311:6:task_system_update	3

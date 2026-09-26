@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  000060a0  2**0
                   CONTENTS, READONLY
- 12 .debug_info   000084dc  00000000  00000000  000060c9  2**0
+ 12 .debug_info   000084c5  00000000  00000000  000060c9  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001fdd  00000000  00000000  0000e5a5  2**0
+ 13 .debug_abbrev 00001fc2  00000000  00000000  0000e58e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000780  00000000  00000000  00010588  2**3
+ 14 .debug_aranges 00000780  00000000  00000000  00010550  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 0000058e  00000000  00000000  00010d08  2**0
+ 15 .debug_rnglists 0000058e  00000000  00000000  00010cd0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000188fa  00000000  00000000  00011296  2**0
+ 16 .debug_macro  000188fa  00000000  00000000  0001125e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000b69f  00000000  00000000  00029b90  2**0
+ 17 .debug_line   0000b69f  00000000  00000000  00029b58  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000836a8  00000000  00000000  0003522f  2**0
+ 18 .debug_str    000836a8  00000000  00000000  000351f7  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000b88d7  2**0
+ 19 .comment      00000043  00000000  00000000  000b889f  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  000027bc  00000000  00000000  000b891c  2**2
+ 20 .debug_frame  000027bc  00000000  00000000  000b88e4  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000091  00000000  00000000  000bb0d8  2**0
+ 21 .debug_line_str 00000091  00000000  00000000  000bb0a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -5966,305 +5966,303 @@ task_system_id_t task_system_get_id(task_system_ev_t event)
  8002350:	bc80      	pop	{r7}
  8002352:	4770      	bx	lr
 
-08002354 <task_system_update>:
-        task_system_statechart(index);
-    }
-}*/
-
-void task_system_update(void *parameters)
-{
- 8002354:	b580      	push	{r7, lr}
- 8002356:	b084      	sub	sp, #16
- 8002358:	af00      	add	r7, sp, #0
- 800235a:	6078      	str	r0, [r7, #4]
-    task_system_ev_t event;
-    task_system_id_t id;
-    uint32_t index;
-
-    while (true == any_event_task_system())
- 800235c:	e01d      	b.n	800239a <task_system_update+0x46>
-        {
-            event = get_event_task_system();
- 800235e:	f000 f903 	bl	8002568 <get_event_task_system>
- 8002362:	4603      	mov	r3, r0
- 8002364:	72fb      	strb	r3, [r7, #11]
-
-            id = task_system_get_id(event);
- 8002366:	7afb      	ldrb	r3, [r7, #11]
- 8002368:	4618      	mov	r0, r3
- 800236a:	f7ff ffc9 	bl	8002300 <task_system_get_id>
- 800236e:	4603      	mov	r3, r0
- 8002370:	72bb      	strb	r3, [r7, #10]
-
-            task_system_dta_list[id].event = event;
- 8002372:	7aba      	ldrb	r2, [r7, #10]
- 8002374:	4914      	ldr	r1, [pc, #80]	@ (80023c8 <task_system_update+0x74>)
- 8002376:	4613      	mov	r3, r2
- 8002378:	005b      	lsls	r3, r3, #1
- 800237a:	4413      	add	r3, r2
- 800237c:	009b      	lsls	r3, r3, #2
- 800237e:	440b      	add	r3, r1
- 8002380:	3309      	adds	r3, #9
- 8002382:	7afa      	ldrb	r2, [r7, #11]
- 8002384:	701a      	strb	r2, [r3, #0]
-            task_system_dta_list[id].flag = true;
- 8002386:	7aba      	ldrb	r2, [r7, #10]
- 8002388:	490f      	ldr	r1, [pc, #60]	@ (80023c8 <task_system_update+0x74>)
- 800238a:	4613      	mov	r3, r2
- 800238c:	005b      	lsls	r3, r3, #1
- 800238e:	4413      	add	r3, r2
- 8002390:	009b      	lsls	r3, r3, #2
- 8002392:	440b      	add	r3, r1
- 8002394:	330a      	adds	r3, #10
- 8002396:	2201      	movs	r2, #1
- 8002398:	701a      	strb	r2, [r3, #0]
-    while (true == any_event_task_system())
- 800239a:	f000 f90b 	bl	80025b4 <any_event_task_system>
- 800239e:	4603      	mov	r3, r0
- 80023a0:	2b00      	cmp	r3, #0
- 80023a2:	d1dc      	bne.n	800235e <task_system_update+0xa>
-    }
-    for (index = 0; SYSTEM_DTA_QTY > index; index++)
- 80023a4:	2300      	movs	r3, #0
- 80023a6:	60fb      	str	r3, [r7, #12]
- 80023a8:	e005      	b.n	80023b6 <task_system_update+0x62>
-    {
-        task_system_statechart(index);
- 80023aa:	68f8      	ldr	r0, [r7, #12]
- 80023ac:	f000 f80e 	bl	80023cc <task_system_statechart>
-    for (index = 0; SYSTEM_DTA_QTY > index; index++)
- 80023b0:	68fb      	ldr	r3, [r7, #12]
- 80023b2:	3301      	adds	r3, #1
- 80023b4:	60fb      	str	r3, [r7, #12]
- 80023b6:	68fb      	ldr	r3, [r7, #12]
- 80023b8:	2b03      	cmp	r3, #3
- 80023ba:	d9f6      	bls.n	80023aa <task_system_update+0x56>
-    }
-}
- 80023bc:	bf00      	nop
- 80023be:	bf00      	nop
- 80023c0:	3710      	adds	r7, #16
- 80023c2:	46bd      	mov	sp, r7
- 80023c4:	bd80      	pop	{r7, pc}
- 80023c6:	bf00      	nop
- 80023c8:	200001b4 	.word	0x200001b4
-
-080023cc <task_system_statechart>:
+08002354 <task_system_statechart>:
 	g_task_system_mode = task_system_mode;
 }
 */
 
 void task_system_statechart(uint32_t index)
 {
- 80023cc:	b580      	push	{r7, lr}
- 80023ce:	b084      	sub	sp, #16
- 80023d0:	af00      	add	r7, sp, #0
- 80023d2:	6078      	str	r0, [r7, #4]
+ 8002354:	b580      	push	{r7, lr}
+ 8002356:	b084      	sub	sp, #16
+ 8002358:	af00      	add	r7, sp, #0
+ 800235a:	6078      	str	r0, [r7, #4]
     task_system_dta_t *p_task_system_dta;
 
     p_task_system_dta = &task_system_dta_list[index];
- 80023d4:	687a      	ldr	r2, [r7, #4]
- 80023d6:	4613      	mov	r3, r2
- 80023d8:	005b      	lsls	r3, r3, #1
- 80023da:	4413      	add	r3, r2
- 80023dc:	009b      	lsls	r3, r3, #2
- 80023de:	4a3e      	ldr	r2, [pc, #248]	@ (80024d8 <task_system_statechart+0x10c>)
- 80023e0:	4413      	add	r3, r2
- 80023e2:	60fb      	str	r3, [r7, #12]
+ 800235c:	687a      	ldr	r2, [r7, #4]
+ 800235e:	4613      	mov	r3, r2
+ 8002360:	005b      	lsls	r3, r3, #1
+ 8002362:	4413      	add	r3, r2
+ 8002364:	009b      	lsls	r3, r3, #2
+ 8002366:	4a3e      	ldr	r2, [pc, #248]	@ (8002460 <task_system_statechart+0x10c>)
+ 8002368:	4413      	add	r3, r2
+ 800236a:	60fb      	str	r3, [r7, #12]
 
     switch (p_task_system_dta->state)
- 80023e4:	68fb      	ldr	r3, [r7, #12]
- 80023e6:	7a1b      	ldrb	r3, [r3, #8]
- 80023e8:	2b00      	cmp	r3, #0
- 80023ea:	d002      	beq.n	80023f2 <task_system_statechart+0x26>
- 80023ec:	2b01      	cmp	r3, #1
- 80023ee:	d02f      	beq.n	8002450 <task_system_statechart+0x84>
- 80023f0:	e05d      	b.n	80024ae <task_system_statechart+0xe2>
+ 800236c:	68fb      	ldr	r3, [r7, #12]
+ 800236e:	7a1b      	ldrb	r3, [r3, #8]
+ 8002370:	2b00      	cmp	r3, #0
+ 8002372:	d002      	beq.n	800237a <task_system_statechart+0x26>
+ 8002374:	2b01      	cmp	r3, #1
+ 8002376:	d02f      	beq.n	80023d8 <task_system_statechart+0x84>
+ 8002378:	e05d      	b.n	8002436 <task_system_statechart+0xe2>
     {
         case ST_SYS_IDLE:
 
             if (true == p_task_system_dta->flag)
- 80023f2:	68fb      	ldr	r3, [r7, #12]
- 80023f4:	7a9b      	ldrb	r3, [r3, #10]
- 80023f6:	2b00      	cmp	r3, #0
- 80023f8:	d066      	beq.n	80024c8 <task_system_statechart+0xfc>
+ 800237a:	68fb      	ldr	r3, [r7, #12]
+ 800237c:	7a9b      	ldrb	r3, [r3, #10]
+ 800237e:	2b00      	cmp	r3, #0
+ 8002380:	d066      	beq.n	8002450 <task_system_statechart+0xfc>
             {
                 if (((ID_SYS_A == p_task_system_dta->identifier) &&
- 80023fa:	68fb      	ldr	r3, [r7, #12]
- 80023fc:	781b      	ldrb	r3, [r3, #0]
- 80023fe:	2b00      	cmp	r3, #0
- 8002400:	d103      	bne.n	800240a <task_system_statechart+0x3e>
+ 8002382:	68fb      	ldr	r3, [r7, #12]
+ 8002384:	781b      	ldrb	r3, [r3, #0]
+ 8002386:	2b00      	cmp	r3, #0
+ 8002388:	d103      	bne.n	8002392 <task_system_statechart+0x3e>
                      (EV_SYS_ACTIVE == p_task_system_dta->event)) ||
- 8002402:	68fb      	ldr	r3, [r7, #12]
- 8002404:	7a5b      	ldrb	r3, [r3, #9]
+ 800238a:	68fb      	ldr	r3, [r7, #12]
+ 800238c:	7a5b      	ldrb	r3, [r3, #9]
                 if (((ID_SYS_A == p_task_system_dta->identifier) &&
- 8002406:	2b01      	cmp	r3, #1
- 8002408:	d017      	beq.n	800243a <task_system_statechart+0x6e>
+ 800238e:	2b01      	cmp	r3, #1
+ 8002390:	d017      	beq.n	80023c2 <task_system_statechart+0x6e>
 
                     ((ID_SYS_B == p_task_system_dta->identifier) &&
- 800240a:	68fb      	ldr	r3, [r7, #12]
- 800240c:	781b      	ldrb	r3, [r3, #0]
+ 8002392:	68fb      	ldr	r3, [r7, #12]
+ 8002394:	781b      	ldrb	r3, [r3, #0]
                      (EV_SYS_ACTIVE == p_task_system_dta->event)) ||
- 800240e:	2b01      	cmp	r3, #1
- 8002410:	d103      	bne.n	800241a <task_system_statechart+0x4e>
+ 8002396:	2b01      	cmp	r3, #1
+ 8002398:	d103      	bne.n	80023a2 <task_system_statechart+0x4e>
                      (EV_SYS_BTN_B_ACTIVE == p_task_system_dta->event)) ||
- 8002412:	68fb      	ldr	r3, [r7, #12]
- 8002414:	7a5b      	ldrb	r3, [r3, #9]
+ 800239a:	68fb      	ldr	r3, [r7, #12]
+ 800239c:	7a5b      	ldrb	r3, [r3, #9]
                     ((ID_SYS_B == p_task_system_dta->identifier) &&
- 8002416:	2b03      	cmp	r3, #3
- 8002418:	d00f      	beq.n	800243a <task_system_statechart+0x6e>
+ 800239e:	2b03      	cmp	r3, #3
+ 80023a0:	d00f      	beq.n	80023c2 <task_system_statechart+0x6e>
 
                     ((ID_SYS_C == p_task_system_dta->identifier) &&
- 800241a:	68fb      	ldr	r3, [r7, #12]
- 800241c:	781b      	ldrb	r3, [r3, #0]
+ 80023a2:	68fb      	ldr	r3, [r7, #12]
+ 80023a4:	781b      	ldrb	r3, [r3, #0]
                      (EV_SYS_BTN_B_ACTIVE == p_task_system_dta->event)) ||
- 800241e:	2b02      	cmp	r3, #2
- 8002420:	d103      	bne.n	800242a <task_system_statechart+0x5e>
+ 80023a6:	2b02      	cmp	r3, #2
+ 80023a8:	d103      	bne.n	80023b2 <task_system_statechart+0x5e>
                      (EV_SYS_BTN_C_ACTIVE == p_task_system_dta->event)) ||
- 8002422:	68fb      	ldr	r3, [r7, #12]
- 8002424:	7a5b      	ldrb	r3, [r3, #9]
+ 80023aa:	68fb      	ldr	r3, [r7, #12]
+ 80023ac:	7a5b      	ldrb	r3, [r3, #9]
                     ((ID_SYS_C == p_task_system_dta->identifier) &&
- 8002426:	2b05      	cmp	r3, #5
- 8002428:	d007      	beq.n	800243a <task_system_statechart+0x6e>
+ 80023ae:	2b05      	cmp	r3, #5
+ 80023b0:	d007      	beq.n	80023c2 <task_system_statechart+0x6e>
 
                     ((ID_SYS_D == p_task_system_dta->identifier) &&
- 800242a:	68fb      	ldr	r3, [r7, #12]
- 800242c:	781b      	ldrb	r3, [r3, #0]
+ 80023b2:	68fb      	ldr	r3, [r7, #12]
+ 80023b4:	781b      	ldrb	r3, [r3, #0]
                      (EV_SYS_BTN_C_ACTIVE == p_task_system_dta->event)) ||
- 800242e:	2b03      	cmp	r3, #3
- 8002430:	d14a      	bne.n	80024c8 <task_system_statechart+0xfc>
+ 80023b6:	2b03      	cmp	r3, #3
+ 80023b8:	d14a      	bne.n	8002450 <task_system_statechart+0xfc>
                      (EV_SYS_BTN_D_ACTIVE == p_task_system_dta->event)))
- 8002432:	68fb      	ldr	r3, [r7, #12]
- 8002434:	7a5b      	ldrb	r3, [r3, #9]
+ 80023ba:	68fb      	ldr	r3, [r7, #12]
+ 80023bc:	7a5b      	ldrb	r3, [r3, #9]
                     ((ID_SYS_D == p_task_system_dta->identifier) &&
- 8002436:	2b07      	cmp	r3, #7
- 8002438:	d146      	bne.n	80024c8 <task_system_statechart+0xfc>
+ 80023be:	2b07      	cmp	r3, #7
+ 80023c0:	d146      	bne.n	8002450 <task_system_statechart+0xfc>
                 {
                     p_task_system_dta->flag = false;
- 800243a:	68fb      	ldr	r3, [r7, #12]
- 800243c:	2200      	movs	r2, #0
- 800243e:	729a      	strb	r2, [r3, #10]
+ 80023c2:	68fb      	ldr	r3, [r7, #12]
+ 80023c4:	2200      	movs	r2, #0
+ 80023c6:	729a      	strb	r2, [r3, #10]
                     put_event_task_actuator(EV_LED_ACTIVE, ID_LED_A);
- 8002440:	2100      	movs	r1, #0
- 8002442:	2001      	movs	r0, #1
- 8002444:	f7ff fc66 	bl	8001d14 <put_event_task_actuator>
+ 80023c8:	2100      	movs	r1, #0
+ 80023ca:	2001      	movs	r0, #1
+ 80023cc:	f7ff fca2 	bl	8001d14 <put_event_task_actuator>
                     p_task_system_dta->state = ST_SYS_ACTIVE;
- 8002448:	68fb      	ldr	r3, [r7, #12]
- 800244a:	2201      	movs	r2, #1
- 800244c:	721a      	strb	r2, [r3, #8]
+ 80023d0:	68fb      	ldr	r3, [r7, #12]
+ 80023d2:	2201      	movs	r2, #1
+ 80023d4:	721a      	strb	r2, [r3, #8]
                 }
             }
 
             break;
- 800244e:	e03b      	b.n	80024c8 <task_system_statechart+0xfc>
+ 80023d6:	e03b      	b.n	8002450 <task_system_statechart+0xfc>
 
 
         case ST_SYS_ACTIVE:
 
             if (true == p_task_system_dta->flag)
- 8002450:	68fb      	ldr	r3, [r7, #12]
- 8002452:	7a9b      	ldrb	r3, [r3, #10]
- 8002454:	2b00      	cmp	r3, #0
- 8002456:	d039      	beq.n	80024cc <task_system_statechart+0x100>
+ 80023d8:	68fb      	ldr	r3, [r7, #12]
+ 80023da:	7a9b      	ldrb	r3, [r3, #10]
+ 80023dc:	2b00      	cmp	r3, #0
+ 80023de:	d039      	beq.n	8002454 <task_system_statechart+0x100>
             {
                 if (((ID_SYS_A == p_task_system_dta->identifier) &&
- 8002458:	68fb      	ldr	r3, [r7, #12]
- 800245a:	781b      	ldrb	r3, [r3, #0]
- 800245c:	2b00      	cmp	r3, #0
- 800245e:	d103      	bne.n	8002468 <task_system_statechart+0x9c>
+ 80023e0:	68fb      	ldr	r3, [r7, #12]
+ 80023e2:	781b      	ldrb	r3, [r3, #0]
+ 80023e4:	2b00      	cmp	r3, #0
+ 80023e6:	d103      	bne.n	80023f0 <task_system_statechart+0x9c>
                      (EV_SYS_IDLE == p_task_system_dta->event)) ||
- 8002460:	68fb      	ldr	r3, [r7, #12]
- 8002462:	7a5b      	ldrb	r3, [r3, #9]
+ 80023e8:	68fb      	ldr	r3, [r7, #12]
+ 80023ea:	7a5b      	ldrb	r3, [r3, #9]
                 if (((ID_SYS_A == p_task_system_dta->identifier) &&
- 8002464:	2b00      	cmp	r3, #0
- 8002466:	d017      	beq.n	8002498 <task_system_statechart+0xcc>
+ 80023ec:	2b00      	cmp	r3, #0
+ 80023ee:	d017      	beq.n	8002420 <task_system_statechart+0xcc>
 
                     ((ID_SYS_B == p_task_system_dta->identifier) &&
- 8002468:	68fb      	ldr	r3, [r7, #12]
- 800246a:	781b      	ldrb	r3, [r3, #0]
+ 80023f0:	68fb      	ldr	r3, [r7, #12]
+ 80023f2:	781b      	ldrb	r3, [r3, #0]
                      (EV_SYS_IDLE == p_task_system_dta->event)) ||
- 800246c:	2b01      	cmp	r3, #1
- 800246e:	d103      	bne.n	8002478 <task_system_statechart+0xac>
+ 80023f4:	2b01      	cmp	r3, #1
+ 80023f6:	d103      	bne.n	8002400 <task_system_statechart+0xac>
                      (EV_SYS_BTN_B_IDLE == p_task_system_dta->event)) ||
- 8002470:	68fb      	ldr	r3, [r7, #12]
- 8002472:	7a5b      	ldrb	r3, [r3, #9]
+ 80023f8:	68fb      	ldr	r3, [r7, #12]
+ 80023fa:	7a5b      	ldrb	r3, [r3, #9]
                     ((ID_SYS_B == p_task_system_dta->identifier) &&
- 8002474:	2b02      	cmp	r3, #2
- 8002476:	d00f      	beq.n	8002498 <task_system_statechart+0xcc>
+ 80023fc:	2b02      	cmp	r3, #2
+ 80023fe:	d00f      	beq.n	8002420 <task_system_statechart+0xcc>
 
                     ((ID_SYS_C == p_task_system_dta->identifier) &&
- 8002478:	68fb      	ldr	r3, [r7, #12]
- 800247a:	781b      	ldrb	r3, [r3, #0]
+ 8002400:	68fb      	ldr	r3, [r7, #12]
+ 8002402:	781b      	ldrb	r3, [r3, #0]
                      (EV_SYS_BTN_B_IDLE == p_task_system_dta->event)) ||
- 800247c:	2b02      	cmp	r3, #2
- 800247e:	d103      	bne.n	8002488 <task_system_statechart+0xbc>
+ 8002404:	2b02      	cmp	r3, #2
+ 8002406:	d103      	bne.n	8002410 <task_system_statechart+0xbc>
                      (EV_SYS_BTN_C_IDLE == p_task_system_dta->event)) ||
- 8002480:	68fb      	ldr	r3, [r7, #12]
- 8002482:	7a5b      	ldrb	r3, [r3, #9]
+ 8002408:	68fb      	ldr	r3, [r7, #12]
+ 800240a:	7a5b      	ldrb	r3, [r3, #9]
                     ((ID_SYS_C == p_task_system_dta->identifier) &&
- 8002484:	2b04      	cmp	r3, #4
- 8002486:	d007      	beq.n	8002498 <task_system_statechart+0xcc>
+ 800240c:	2b04      	cmp	r3, #4
+ 800240e:	d007      	beq.n	8002420 <task_system_statechart+0xcc>
 
                     ((ID_SYS_D == p_task_system_dta->identifier) &&
- 8002488:	68fb      	ldr	r3, [r7, #12]
- 800248a:	781b      	ldrb	r3, [r3, #0]
+ 8002410:	68fb      	ldr	r3, [r7, #12]
+ 8002412:	781b      	ldrb	r3, [r3, #0]
                      (EV_SYS_BTN_C_IDLE == p_task_system_dta->event)) ||
- 800248c:	2b03      	cmp	r3, #3
- 800248e:	d11d      	bne.n	80024cc <task_system_statechart+0x100>
+ 8002414:	2b03      	cmp	r3, #3
+ 8002416:	d11d      	bne.n	8002454 <task_system_statechart+0x100>
                      (EV_SYS_BTN_D_IDLE == p_task_system_dta->event)))
- 8002490:	68fb      	ldr	r3, [r7, #12]
- 8002492:	7a5b      	ldrb	r3, [r3, #9]
+ 8002418:	68fb      	ldr	r3, [r7, #12]
+ 800241a:	7a5b      	ldrb	r3, [r3, #9]
                     ((ID_SYS_D == p_task_system_dta->identifier) &&
- 8002494:	2b06      	cmp	r3, #6
- 8002496:	d119      	bne.n	80024cc <task_system_statechart+0x100>
+ 800241c:	2b06      	cmp	r3, #6
+ 800241e:	d119      	bne.n	8002454 <task_system_statechart+0x100>
                 {
                     p_task_system_dta->flag = false;
- 8002498:	68fb      	ldr	r3, [r7, #12]
- 800249a:	2200      	movs	r2, #0
- 800249c:	729a      	strb	r2, [r3, #10]
+ 8002420:	68fb      	ldr	r3, [r7, #12]
+ 8002422:	2200      	movs	r2, #0
+ 8002424:	729a      	strb	r2, [r3, #10]
                     put_event_task_actuator(EV_LED_IDLE, ID_LED_A);
- 800249e:	2100      	movs	r1, #0
- 80024a0:	2000      	movs	r0, #0
- 80024a2:	f7ff fc37 	bl	8001d14 <put_event_task_actuator>
+ 8002426:	2100      	movs	r1, #0
+ 8002428:	2000      	movs	r0, #0
+ 800242a:	f7ff fc73 	bl	8001d14 <put_event_task_actuator>
                     p_task_system_dta->state = ST_SYS_IDLE;
- 80024a6:	68fb      	ldr	r3, [r7, #12]
- 80024a8:	2200      	movs	r2, #0
- 80024aa:	721a      	strb	r2, [r3, #8]
+ 800242e:	68fb      	ldr	r3, [r7, #12]
+ 8002430:	2200      	movs	r2, #0
+ 8002432:	721a      	strb	r2, [r3, #8]
                 }
             }
 
             break;
- 80024ac:	e00e      	b.n	80024cc <task_system_statechart+0x100>
+ 8002434:	e00e      	b.n	8002454 <task_system_statechart+0x100>
 
 
         default:
 
             p_task_system_dta->tick = DEL_SYS_MIN;
- 80024ae:	68fb      	ldr	r3, [r7, #12]
- 80024b0:	2200      	movs	r2, #0
- 80024b2:	605a      	str	r2, [r3, #4]
+ 8002436:	68fb      	ldr	r3, [r7, #12]
+ 8002438:	2200      	movs	r2, #0
+ 800243a:	605a      	str	r2, [r3, #4]
             p_task_system_dta->state = ST_SYS_IDLE;
- 80024b4:	68fb      	ldr	r3, [r7, #12]
- 80024b6:	2200      	movs	r2, #0
- 80024b8:	721a      	strb	r2, [r3, #8]
+ 800243c:	68fb      	ldr	r3, [r7, #12]
+ 800243e:	2200      	movs	r2, #0
+ 8002440:	721a      	strb	r2, [r3, #8]
             p_task_system_dta->event = EV_SYS_IDLE;
- 80024ba:	68fb      	ldr	r3, [r7, #12]
- 80024bc:	2200      	movs	r2, #0
- 80024be:	725a      	strb	r2, [r3, #9]
+ 8002442:	68fb      	ldr	r3, [r7, #12]
+ 8002444:	2200      	movs	r2, #0
+ 8002446:	725a      	strb	r2, [r3, #9]
             p_task_system_dta->flag = false;
- 80024c0:	68fb      	ldr	r3, [r7, #12]
- 80024c2:	2200      	movs	r2, #0
- 80024c4:	729a      	strb	r2, [r3, #10]
+ 8002448:	68fb      	ldr	r3, [r7, #12]
+ 800244a:	2200      	movs	r2, #0
+ 800244c:	729a      	strb	r2, [r3, #10]
 
             break;
- 80024c6:	e002      	b.n	80024ce <task_system_statechart+0x102>
+ 800244e:	e002      	b.n	8002456 <task_system_statechart+0x102>
             break;
- 80024c8:	bf00      	nop
- 80024ca:	e000      	b.n	80024ce <task_system_statechart+0x102>
+ 8002450:	bf00      	nop
+ 8002452:	e000      	b.n	8002456 <task_system_statechart+0x102>
             break;
- 80024cc:	bf00      	nop
+ 8002454:	bf00      	nop
     }
 }
+ 8002456:	bf00      	nop
+ 8002458:	3710      	adds	r7, #16
+ 800245a:	46bd      	mov	sp, r7
+ 800245c:	bd80      	pop	{r7, pc}
+ 800245e:	bf00      	nop
+ 8002460:	200001b4 	.word	0x200001b4
+
+08002464 <task_system_update>:
+
+
+void task_system_update(void *parameters)
+{
+ 8002464:	b580      	push	{r7, lr}
+ 8002466:	b084      	sub	sp, #16
+ 8002468:	af00      	add	r7, sp, #0
+ 800246a:	6078      	str	r0, [r7, #4]
+    task_system_ev_t event;
+    task_system_id_t id;
+    uint32_t index;
+
+    while (true == any_event_task_system())
+ 800246c:	e01d      	b.n	80024aa <task_system_update+0x46>
+        {
+            event = get_event_task_system();
+ 800246e:	f000 f87b 	bl	8002568 <get_event_task_system>
+ 8002472:	4603      	mov	r3, r0
+ 8002474:	72fb      	strb	r3, [r7, #11]
+
+            id = task_system_get_id(event);
+ 8002476:	7afb      	ldrb	r3, [r7, #11]
+ 8002478:	4618      	mov	r0, r3
+ 800247a:	f7ff ff41 	bl	8002300 <task_system_get_id>
+ 800247e:	4603      	mov	r3, r0
+ 8002480:	72bb      	strb	r3, [r7, #10]
+
+            task_system_dta_list[id].event = event;
+ 8002482:	7aba      	ldrb	r2, [r7, #10]
+ 8002484:	4914      	ldr	r1, [pc, #80]	@ (80024d8 <task_system_update+0x74>)
+ 8002486:	4613      	mov	r3, r2
+ 8002488:	005b      	lsls	r3, r3, #1
+ 800248a:	4413      	add	r3, r2
+ 800248c:	009b      	lsls	r3, r3, #2
+ 800248e:	440b      	add	r3, r1
+ 8002490:	3309      	adds	r3, #9
+ 8002492:	7afa      	ldrb	r2, [r7, #11]
+ 8002494:	701a      	strb	r2, [r3, #0]
+            task_system_dta_list[id].flag = true;
+ 8002496:	7aba      	ldrb	r2, [r7, #10]
+ 8002498:	490f      	ldr	r1, [pc, #60]	@ (80024d8 <task_system_update+0x74>)
+ 800249a:	4613      	mov	r3, r2
+ 800249c:	005b      	lsls	r3, r3, #1
+ 800249e:	4413      	add	r3, r2
+ 80024a0:	009b      	lsls	r3, r3, #2
+ 80024a2:	440b      	add	r3, r1
+ 80024a4:	330a      	adds	r3, #10
+ 80024a6:	2201      	movs	r2, #1
+ 80024a8:	701a      	strb	r2, [r3, #0]
+    while (true == any_event_task_system())
+ 80024aa:	f000 f883 	bl	80025b4 <any_event_task_system>
+ 80024ae:	4603      	mov	r3, r0
+ 80024b0:	2b00      	cmp	r3, #0
+ 80024b2:	d1dc      	bne.n	800246e <task_system_update+0xa>
+    }
+    for (index = 0; SYSTEM_DTA_QTY > index; index++)
+ 80024b4:	2300      	movs	r3, #0
+ 80024b6:	60fb      	str	r3, [r7, #12]
+ 80024b8:	e005      	b.n	80024c6 <task_system_update+0x62>
+    {
+        task_system_statechart(index);
+ 80024ba:	68f8      	ldr	r0, [r7, #12]
+ 80024bc:	f7ff ff4a 	bl	8002354 <task_system_statechart>
+    for (index = 0; SYSTEM_DTA_QTY > index; index++)
+ 80024c0:	68fb      	ldr	r3, [r7, #12]
+ 80024c2:	3301      	adds	r3, #1
+ 80024c4:	60fb      	str	r3, [r7, #12]
+ 80024c6:	68fb      	ldr	r3, [r7, #12]
+ 80024c8:	2b03      	cmp	r3, #3
+ 80024ca:	d9f6      	bls.n	80024ba <task_system_update+0x56>
+    }
+}
+ 80024cc:	bf00      	nop
  80024ce:	bf00      	nop
  80024d0:	3710      	adds	r7, #16
  80024d2:	46bd      	mov	sp, r7

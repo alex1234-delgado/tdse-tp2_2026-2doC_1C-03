@@ -1,4 +1,4 @@
 ../app/src/task_system.c:82:6:task_system_init	64	static,ignoring_inline_asm
 ../app/src/task_system.c:128:18:task_system_get_id	16	static
-../app/src/task_system.c:183:6:task_system_update	24	static
-../app/src/task_system.c:260:6:task_system_statechart	24	static
+../app/src/task_system.c:241:6:task_system_statechart	24	static
+../app/src/task_system.c:311:6:task_system_update	24	static

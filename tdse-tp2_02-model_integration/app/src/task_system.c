@@ -180,26 +180,7 @@ void task_system_update(void *parameters)
     }
 }*/
 
-void task_system_update(void *parameters)
-{
-    task_system_ev_t event;
-    task_system_id_t id;
-    uint32_t index;
 
-    while (true == any_event_task_system())
-        {
-            event = get_event_task_system();
-
-            id = task_system_get_id(event);
-
-            task_system_dta_list[id].event = event;
-            task_system_dta_list[id].flag = true;
-    }
-    for (index = 0; SYSTEM_DTA_QTY > index; index++)
-    {
-        task_system_statechart(index);
-    }
-}
 
 /**********
 void task_system_normal_statechart(void)
@@ -323,6 +304,28 @@ void task_system_statechart(uint32_t index)
             p_task_system_dta->flag = false;
 
             break;
+    }
+}
+
+
+void task_system_update(void *parameters)
+{
+    task_system_ev_t event;
+    task_system_id_t id;
+    uint32_t index;
+
+    while (true == any_event_task_system())
+        {
+            event = get_event_task_system();
+
+            id = task_system_get_id(event);
+
+            task_system_dta_list[id].event = event;
+            task_system_dta_list[id].flag = true;
+    }
+    for (index = 0; SYSTEM_DTA_QTY > index; index++)
+    {
+        task_system_statechart(index);
     }
 }
 /********************** end of file ******************************************/
