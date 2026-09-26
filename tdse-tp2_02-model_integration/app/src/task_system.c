@@ -54,17 +54,21 @@
 #define DEL_SYS_MAX			500ul
 
 /* Modes to excite Task System */
-typedef enum task_system_mode {NORMAL, MODE_QTY} task_system_mode_t;
+/*typedef enum task_system_mode {NORMAL, MODE_QTY} task_system_mode_t;
 
 #define SYSTEM_DTA_QTY	MODE_QTY
+*/
+
+#define SYSTEM_DTA_QTY SYS_QTY
+
 
 /********************** internal data declaration ****************************/
 task_system_dta_t task_system_dta_list[SYSTEM_DTA_QTY];
 
 /********************** internal functions declaration ***********************/
-void task_system_normal_statechart(void);
+//void task_system_normal_statechart(void);
 
-void task_system_set_mode(task_system_mode_t);
+//void task_system_set_mode(task_system_mode_t);
 
 /********************** internal data definition *****************************/
 const char *p_task_system 		= "Task System (System Statechart)";
@@ -72,7 +76,7 @@ const char *p_task_system_ 		= "Non-Blocking Code";
 const char *p_task_system__ 	= "(Update by Time Code, period = 1mS)";
 
 /********************** external data declaration ****************************/
-task_system_mode_t g_task_system_mode;
+/*task_system_mode_t g_task_system_mode; */
 
 /********************** external functions definition ************************/
 void task_system_init(void *parameters)
@@ -92,12 +96,14 @@ void task_system_init(void *parameters)
 
 	init_event_task_system();
 
-	task_system_set_mode(NORMAL);
+	//task_system_set_mode(NORMAL);
 
 	for (index = 0; SYSTEM_DTA_QTY > index; index++)
 	{
 		/* Update Task System Data Pointer */
 		p_task_system_dta = &task_system_dta_list[index];
+
+		p_task_system_dta->identifier = index;
 
 		/* Init & Print out: Task execution FSM */
 		state = ST_SYS_IDLE;
@@ -116,12 +122,38 @@ void task_system_init(void *parameters)
 					GET_NAME(b_event), (b_event ? "true" : "false"));
 	}
 
-	task_system_set_mode(NORMAL);
+	//task_system_set_mode(NORMAL);
 }
 
+task_system_id_t task_system_get_id(task_system_ev_t event)
+{
+    switch (event)
+    {
+        case EV_SYS_IDLE:
+        case EV_SYS_ACTIVE:
+            return ID_SYS_A;
+
+        case EV_SYS_BTN_B_IDLE:
+        case EV_SYS_BTN_B_ACTIVE:
+            return ID_SYS_B;
+
+        case EV_SYS_BTN_C_IDLE:
+        case EV_SYS_BTN_C_ACTIVE:
+            return ID_SYS_C;
+
+        case EV_SYS_BTN_D_IDLE:
+        case EV_SYS_BTN_D_ACTIVE:
+            return ID_SYS_D;
+
+        default:
+            return ID_SYS_A;
+    }
+}
+
+/*
 void task_system_update(void *parameters)
 {
-	/* Run Task Statechart */
+	 Run Task Statechart
 	switch (g_task_system_mode)
 	{
 		case NORMAL:
@@ -136,13 +168,45 @@ void task_system_update(void *parameters)
 
 			break;
 		}
+}*/
+/*
+void task_system_update(void *parameters)
+{
+    uint32_t index;
+
+    for (index = 0; SYSTEM_DTA_QTY > index; index++)
+    {
+        task_system_statechart(index);
+    }
+}*/
+
+void task_system_update(void *parameters)
+{
+    task_system_ev_t event;
+    task_system_id_t id;
+    uint32_t index;
+
+    while (true == any_event_task_system())
+        {
+            event = get_event_task_system();
+
+            id = task_system_get_id(event);
+
+            task_system_dta_list[id].event = event;
+            task_system_dta_list[id].flag = true;
+    }
+    for (index = 0; SYSTEM_DTA_QTY > index; index++)
+    {
+        task_system_statechart(index);
+    }
 }
 
+/**********
 void task_system_normal_statechart(void)
 {
 	task_system_dta_t *p_task_system_dta;
 
-	/* Update Task System Data Pointer */
+	 Update Task System Data Pointer
 	p_task_system_dta = &task_system_dta_list[NORMAL];
 
 	if (true == any_event_task_system())
@@ -185,10 +249,80 @@ void task_system_normal_statechart(void)
 			break;
 	}
 }
-
+*/
+/*
 void task_system_set_mode(task_system_mode_t task_system_mode)
 {
 	g_task_system_mode = task_system_mode;
 }
+*/
 
+void task_system_statechart(uint32_t index)
+{
+    task_system_dta_t *p_task_system_dta;
+
+    p_task_system_dta = &task_system_dta_list[index];
+
+    switch (p_task_system_dta->state)
+    {
+        case ST_SYS_IDLE:
+
+            if (true == p_task_system_dta->flag)
+            {
+                if (((ID_SYS_A == p_task_system_dta->identifier) &&
+                     (EV_SYS_ACTIVE == p_task_system_dta->event)) ||
+
+                    ((ID_SYS_B == p_task_system_dta->identifier) &&
+                     (EV_SYS_BTN_B_ACTIVE == p_task_system_dta->event)) ||
+
+                    ((ID_SYS_C == p_task_system_dta->identifier) &&
+                     (EV_SYS_BTN_C_ACTIVE == p_task_system_dta->event)) ||
+
+                    ((ID_SYS_D == p_task_system_dta->identifier) &&
+                     (EV_SYS_BTN_D_ACTIVE == p_task_system_dta->event)))
+                {
+                    p_task_system_dta->flag = false;
+                    put_event_task_actuator(EV_LED_ACTIVE, ID_LED_A);
+                    p_task_system_dta->state = ST_SYS_ACTIVE;
+                }
+            }
+
+            break;
+
+
+        case ST_SYS_ACTIVE:
+
+            if (true == p_task_system_dta->flag)
+            {
+                if (((ID_SYS_A == p_task_system_dta->identifier) &&
+                     (EV_SYS_IDLE == p_task_system_dta->event)) ||
+
+                    ((ID_SYS_B == p_task_system_dta->identifier) &&
+                     (EV_SYS_BTN_B_IDLE == p_task_system_dta->event)) ||
+
+                    ((ID_SYS_C == p_task_system_dta->identifier) &&
+                     (EV_SYS_BTN_C_IDLE == p_task_system_dta->event)) ||
+
+                    ((ID_SYS_D == p_task_system_dta->identifier) &&
+                     (EV_SYS_BTN_D_IDLE == p_task_system_dta->event)))
+                {
+                    p_task_system_dta->flag = false;
+                    put_event_task_actuator(EV_LED_IDLE, ID_LED_A);
+                    p_task_system_dta->state = ST_SYS_IDLE;
+                }
+            }
+
+            break;
+
+
+        default:
+
+            p_task_system_dta->tick = DEL_SYS_MIN;
+            p_task_system_dta->state = ST_SYS_IDLE;
+            p_task_system_dta->event = EV_SYS_IDLE;
+            p_task_system_dta->flag = false;
+
+            break;
+    }
+}
 /********************** end of file ******************************************/

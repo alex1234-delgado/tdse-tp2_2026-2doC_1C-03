@@ -108,4 +108,8 @@ bool any_event_task_system(void)
   return (event_task_system_queue.head != event_task_system_queue.tail);
 }
 
+extern task_system_id_t task_system_get_id(task_system_ev_t event);
+
+extern void task_system_statechart(uint32_t index);
+
 /********************** end of file ******************************************/

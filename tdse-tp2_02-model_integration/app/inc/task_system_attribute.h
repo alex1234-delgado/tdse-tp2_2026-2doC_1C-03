@@ -1,4 +1,4 @@
-/*
+	/*
  * Copyright (c) 2026 Juan Manuel Cruz <jcruz@fi.uba.ar> <jcruz@frba.utn.edu.ar>.
  * All rights reserved.
  *
@@ -47,14 +47,29 @@ extern "C" {
 /********************** typedef **********************************************/
 /* Events to excite Task System */
 typedef enum task_system_ev {EV_SYS_IDLE,
-							 EV_SYS_ACTIVE} task_system_ev_t;
+							 EV_SYS_ACTIVE,
+							 EV_SYS_BTN_B_IDLE,
+							 EV_SYS_BTN_B_ACTIVE,
+							 EV_SYS_BTN_C_IDLE,
+							 EV_SYS_BTN_C_ACTIVE,
+							 EV_SYS_BTN_D_IDLE,
+							 EV_SYS_BTN_D_ACTIVE} task_system_ev_t;
+
+							 /* Identifier of Task System */
+
+typedef enum task_system_id{
+							 ID_SYS_A,
+							 ID_SYS_B,
+							 ID_SYS_C,
+							 ID_SYS_D,
+							 SYS_QTY} task_system_id_t;
 
 /* State of Task System */
 typedef enum task_system_st {ST_SYS_IDLE,
 							 ST_SYS_ACTIVE} task_system_st_t;
 
-typedef struct
-{
+typedef struct{
+	task_system_id_t identifier;
 	uint32_t			tick;
 	task_system_st_t	state;
 	task_system_ev_t	event;
