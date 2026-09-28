@@ -57,39 +57,33 @@
 
 /********************** internal data declaration ****************************/
 const task_sensor_cfg_t task_sensor_cfg_list[] = {
-	   {    ID_BTN_A,
-			BTN_A_PORT,
-			BTN_A_PIN,
-			BTN_A_PRESSED,
-			DEL_BTN_MAX,
-	        EV_SYS_IDLE,
-			EV_SYS_ACTIVE},
-	   {
-	        ID_BTN_B,
-	        BTN_B_GPIO_Port,
-	        BTN_B_Pin,
-	        GPIO_PIN_SET,
-	        DEL_BTN_MAX,
-	        EV_SYS_IDLE,
-	        EV_SYS_ACTIVE},
-
-	    {
-	        ID_BTN_C,
-	        BTN_C_GPIO_Port,
-	        BTN_C_Pin,
-	        GPIO_PIN_SET,
-	        DEL_BTN_MAX,
-	        EV_SYS_IDLE,
-	        EV_SYS_ACTIVE},
-
-	    {
-	        ID_BTN_D,
-	        BTN_D_GPIO_Port,
-	        BTN_D_Pin,
-	        GPIO_PIN_SET,
-	        DEL_BTN_MAX,
-	        EV_SYS_IDLE,
-	        EV_SYS_ACTIVE}
+    {
+        ID_BTN_B,
+        BTN_B_GPIO_Port,
+        BTN_B_Pin,
+        GPIO_PIN_SET,
+        DEL_BTN_MAX,
+        EV_SYS_CAMERA,      // Evento de llegada del vehículo
+        EV_SYS_CAMERA
+    },
+    {
+        ID_BTN_C,
+        BTN_C_GPIO_Port,
+        BTN_C_Pin,
+        GPIO_PIN_SET,
+        DEL_BTN_MAX,
+        EV_SYS_BUTTON,      // Evento de pulsador de ticket
+        EV_SYS_BUTTON
+    },
+    {
+        ID_BTN_D,
+        BTN_D_GPIO_Port,
+        BTN_D_Pin,
+        GPIO_PIN_SET,
+        DEL_BTN_MAX,
+        EV_SYS_SENSOR_COIL, // Evento de paso por la bobina
+        EV_SYS_SENSOR_COIL
+    }
 };
 
 task_sensor_dta_t task_sensor_dta_list[SENSOR_DTA_QTY];
@@ -130,6 +124,8 @@ void task_sensor_init(void *parameters)
 
 		event = EV_BTN_UP;
 		p_task_sensor_dta->event = event;
+
+		p_task_sensor_dta->tick = DEL_BTN_MIN;
 
 		LOGGER_INFO(" ");
 		LOGGER_INFO("   %s = %lu   %s = %lu   %s = %lu",

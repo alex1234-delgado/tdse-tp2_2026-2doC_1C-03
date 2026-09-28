@@ -100,14 +100,16 @@ void task_system_init(void *parameters)
 		p_task_system_dta = &task_system_dta_list[index];
 
 		/* Init & Print out: Task execution FSM */
-		state = ST_SYS_IDLE;
+		state = ST_SYS_WAIT_FOR_CAR_ARRIEVE;
 		p_task_system_dta->state = state;
 
-		event = EV_SYS_IDLE;
+		event = EV_SYS_CAMERA;
 		p_task_system_dta->event = event;
 
 		b_event = false;
 		p_task_system_dta->flag = b_event;
+
+		p_task_system_dta->tick = DEL_SYS_MIN;
 
 		LOGGER_INFO(" ");
 		LOGGER_INFO("   %s = %lu   %s = %lu   %s = %s",
@@ -153,35 +155,64 @@ void task_system_normal_statechart(void)
 
 	switch (p_task_system_dta->state)
 	{
-		case ST_SYS_IDLE:
-
-			if ((true == p_task_system_dta->flag) && (EV_SYS_ACTIVE == p_task_system_dta->event))
+		case ST_SYS_WAIT_FOR_CAR_ARRIEVE:
+			if ((true == p_task_system_dta->flag) && (EV_SYS_CAMERA == p_task_system_dta->event))
 			{
 				p_task_system_dta->flag = false;
-				put_event_task_actuator(EV_LED_ACTIVE, ID_LED_A);
-				p_task_system_dta->state = ST_SYS_ACTIVE;
+				p_task_system_dta->state = ST_SYS_WAIT_FOR_BUTTON_PRESSED;
 			}
-
 			break;
 
-		case ST_SYS_ACTIVE:
-
-			if ((true == p_task_system_dta->flag) && (EV_SYS_IDLE == p_task_system_dta->event))
+		case ST_SYS_WAIT_FOR_BUTTON_PRESSED:
+			if ((true == p_task_system_dta->flag) && (EV_SYS_BUTTON == p_task_system_dta->event))
 			{
 				p_task_system_dta->flag = false;
-				put_event_task_actuator(EV_LED_IDLE, ID_LED_A);
-				p_task_system_dta->state = ST_SYS_IDLE;
+				p_task_system_dta->tick = DEL_SYS_MAX;
+				put_event_task_actuator(EV_LED_BLINK, ID_LED_BARRIER_OPEN);
+				put_event_task_actuator(EV_LED_OFF, ID_LED_BARRIER_CLOSE);
+				p_task_system_dta->state = ST_SYS_WAIT_FOR_BARRIER_OPENED;
 			}
+			break;
 
+		case ST_SYS_WAIT_FOR_BARRIER_OPENED:
+			if (p_task_system_dta->tick > 0)
+			{
+				p_task_system_dta->tick--;
+			}
+			else if (p_task_system_dta->tick == 0)
+			{
+				put_event_task_actuator(EV_LED_ON, ID_LED_BARRIER_OPEN);
+				p_task_system_dta->state = ST_SYS_WAIT_FOR_CAR_LEAVES;
+			}
+			break;
+
+		case ST_SYS_WAIT_FOR_CAR_LEAVES:
+			if ((true == p_task_system_dta->flag) && (EV_SYS_SENSOR_COIL == p_task_system_dta->event))
+			{
+				p_task_system_dta->flag = false;
+				p_task_system_dta->tick = DEL_SYS_MAX;
+				put_event_task_actuator(EV_LED_OFF, ID_LED_BARRIER_OPEN);
+				put_event_task_actuator(EV_LED_BLINK, ID_LED_BARRIER_CLOSE);
+				p_task_system_dta->state = ST_SYS_WAIT_FOR_BARRIER_CLOSED;
+			}
+			break;
+
+		case ST_SYS_WAIT_FOR_BARRIER_CLOSED:
+			if (p_task_system_dta->tick > 0)
+			{
+				p_task_system_dta->tick--;
+			}
+			else if (p_task_system_dta->tick == 0)
+			{
+				put_event_task_actuator(EV_LED_ON, ID_LED_BARRIER_CLOSE);
+				p_task_system_dta->state = ST_SYS_WAIT_FOR_CAR_ARRIEVE;
+			}
 			break;
 
 		default:
-
 			p_task_system_dta->tick  = DEL_SYS_MIN;
-			p_task_system_dta->state = ST_SYS_IDLE;
-			p_task_system_dta->event = EV_SYS_IDLE;
+			p_task_system_dta->state = ST_SYS_WAIT_FOR_CAR_ARRIEVE;
 			p_task_system_dta->flag = false;
-
 			break;
 	}
 }

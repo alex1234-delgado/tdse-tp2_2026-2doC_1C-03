@@ -1,11 +1,5 @@
-### CONFIGURACION DE BOTONES
-## Botones en la placa
-
-D2 -> como pull_down;
-D4 -> como pull_down;
-D5 -> como pull_down;
+### CONFIGURACION 
 
 ## Comentarios
 
-En system.c y system.h, se debe limpiar los nombres de los puertos, para que sean de facil lectura, ahora tienen el nombre puesto por **.ioc**. Archuivos modificados: **task_sensor.c** y **task_sensor.h**
-
+El system, ahora tiene configurado al led integrado de la placa como led de barrera abierta y cerrada, luego abria que habilitar mas pines del micro para que sean leds externos y no de la placa
