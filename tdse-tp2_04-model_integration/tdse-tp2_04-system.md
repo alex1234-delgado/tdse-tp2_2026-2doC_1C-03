@@ -4,7 +4,7 @@
 
 ### Registro de depuración (task_actuator)
 
-* `tick`: 500 ms
-* `state`: ST_LED_BLINK (o el valor leído)
-* `event`: EV_LED_BLINK
+* `tick`: 0 ms
+* `state`: ST_LED_OFF
+* `event`: EV_LED_OFF
 * `flag`: false
