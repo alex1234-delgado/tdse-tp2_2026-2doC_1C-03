@@ -1,0 +1,4 @@
+../app/src/task_system.c:78:6:task_system_init	3
+../app/src/task_system.c:124:6:task_system_update	2
+../app/src/task_system.c:143:6:task_system_normal_statechart	17
+../app/src/task_system.c:219:6:task_system_set_mode	1
