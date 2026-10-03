@@ -66,27 +66,27 @@ const task_sensor_cfg_t task_sensor_cfg_list[] = {
 			EV_SYS_ACTIVE},
 	   {
 	        ID_BTN_B,
-	        BTN_B_GPIO_Port,
-	        BTN_B_Pin,
-	        GPIO_PIN_SET,
+	        BTN_B_PORT,
+	        BTN_B_PIN,
+	        BTN_B_PRESSED,
 	        DEL_BTN_MAX,
 	        EV_SYS_IDLE,
 	        EV_SYS_ACTIVE},
 
 	    {
 	        ID_BTN_C,
-	        BTN_C_GPIO_Port,
-	        BTN_C_Pin,
-	        GPIO_PIN_SET,
+	        BTN_C_PORT,
+	        BTN_C_PIN,
+	        BTN_C_PRESSED,
 	        DEL_BTN_MAX,
 	        EV_SYS_IDLE,
 	        EV_SYS_ACTIVE},
 
 	    {
 	        ID_BTN_D,
-	        BTN_D_GPIO_Port,
-	        BTN_D_Pin,
-	        GPIO_PIN_SET,
+	        BTN_D_PORT,
+	        BTN_D_PIN,
+	        BTN_D_PRESSED,
 	        DEL_BTN_MAX,
 	        EV_SYS_IDLE,
 	        EV_SYS_ACTIVE}
