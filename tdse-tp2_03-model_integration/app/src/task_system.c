@@ -51,7 +51,7 @@
 /********************** macros and definitions *******************************/
 #define DEL_SYS_MIN			0ul
 #define DEL_SYS_MED			250ul
-#define DEL_SYS_MAX			500ul
+#define DEL_SYS_MAX			2000ul
 
 /* Modes to excite Task System */
 typedef enum task_system_mode {NORMAL, MODE_QTY} task_system_mode_t;

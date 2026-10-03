@@ -58,28 +58,28 @@
 /********************** internal data declaration ****************************/
 const task_sensor_cfg_t task_sensor_cfg_list[] = {
     {
-        ID_BTN_B,
-        BTN_B_GPIO_Port,
-        BTN_B_Pin,
-        GPIO_PIN_SET,
+        ID_BTN_CAM,
+        BTN_CAM_PORT,
+        BTN_CAM_PIN,
+        BTN_CAM_PRESSED,
         DEL_BTN_MAX,
         EV_SYS_CAMERA,      // Evento de llegada del vehículo
         EV_SYS_CAMERA
     },
     {
-        ID_BTN_C,
-        BTN_C_GPIO_Port,
-        BTN_C_Pin,
-        GPIO_PIN_SET,
+        ID_BTN_BTTN,
+        BTN_BTTN_PORT,
+        BTN_BTTN_PIN,
+        BTN_BTTN_PRESSED,
         DEL_BTN_MAX,
         EV_SYS_BUTTON,      // Evento de pulsador de ticket
         EV_SYS_BUTTON
     },
     {
-        ID_BTN_D,
-        BTN_D_GPIO_Port,
-        BTN_D_Pin,
-        GPIO_PIN_SET,
+        ID_BTN_COIL,
+        BTN_COIL_PORT,
+        BTN_COIL_PIN,
+        BTN_COIL_PRESSED,
         DEL_BTN_MAX,
         EV_SYS_SENSOR_COIL, // Evento de paso por la bobina
         EV_SYS_SENSOR_COIL

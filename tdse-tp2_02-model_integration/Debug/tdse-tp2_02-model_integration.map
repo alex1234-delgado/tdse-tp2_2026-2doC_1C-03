@@ -3980,7 +3980,7 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/../../../../arm-none-eabi/lib/thumb/v7-m/nofp/libm.a
 LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.linux64_1.0.0.202410170706/tools/bin/../lib/gcc/arm-none-eabi/13.3.1/thumb/v7-m/nofp/libgcc.a
 
-.debug_info     0x00000000     0x8440
+.debug_info     0x00000000     0x840a
  .debug_info    0x00000000      0xb31 ./Core/Src/main.o
  .debug_info    0x00000b31      0x7f8 ./Core/Src/stm32f1xx_hal_msp.o
  .debug_info    0x00001329      0x152 ./Core/Src/stm32f1xx_it.o
@@ -3995,11 +3995,11 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_info    0x0000662d      0x4f0 ./app/src/app.o
  .debug_info    0x00006b1d      0x10c ./app/src/app_it.o
  .debug_info    0x00006c29      0x797 ./app/src/logger.o
- .debug_info    0x000073c0      0x48e ./app/src/task_actuator.o
- .debug_info    0x0000784e      0x1c2 ./app/src/task_actuator_interface.o
- .debug_info    0x00007a10      0x4bd ./app/src/task_sensor.o
- .debug_info    0x00007ecd      0x3bc ./app/src/task_system.o
- .debug_info    0x00008289      0x1b7 ./app/src/task_system_interface.o
+ .debug_info    0x000073c0      0x47c ./app/src/task_actuator.o
+ .debug_info    0x0000783c      0x1b0 ./app/src/task_actuator_interface.o
+ .debug_info    0x000079ec      0x4bd ./app/src/task_sensor.o
+ .debug_info    0x00007ea9      0x3aa ./app/src/task_system.o
+ .debug_info    0x00008253      0x1b7 ./app/src/task_system_interface.o
 
 .debug_abbrev   0x00000000     0x1f72
  .debug_abbrev  0x00000000      0x266 ./Core/Src/main.o
@@ -4214,27 +4214,27 @@ LOAD /opt/st/stm32cubeide_1.19.0/plugins/com.st.stm32cube.ide.mcu.externaltools.
  .debug_line    0x0000a3ee      0x9ce ./app/src/task_system.o
  .debug_line    0x0000adbc      0x87e ./app/src/task_system_interface.o
 
-.debug_str      0x00000000    0x835eb
- .debug_str     0x00000000    0x835eb ./Core/Src/main.o
+.debug_str      0x00000000    0x835d0
+ .debug_str     0x00000000    0x835d0 ./Core/Src/main.o
                               0x80fed (size before relaxing)
- .debug_str     0x000835eb    0x7d0a0 ./Core/Src/stm32f1xx_hal_msp.o
- .debug_str     0x000835eb    0x7cc89 ./Core/Src/stm32f1xx_it.o
- .debug_str     0x000835eb     0x7753 ./Core/Src/sysmem.o
- .debug_str     0x000835eb    0x7ca82 ./Core/Src/system_stm32f1xx.o
- .debug_str     0x000835eb       0xad ./Core/Startup/startup_stm32f103rbtx.o
- .debug_str     0x000835eb    0x7d1b5 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o
- .debug_str     0x000835eb    0x7d101 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
- .debug_str     0x000835eb    0x7ce08 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
- .debug_str     0x000835eb    0x7ceb1 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
- .debug_str     0x000835eb    0x7d522 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o
- .debug_str     0x000835eb    0x80c3d ./app/src/app.o
- .debug_str     0x000835eb    0x80908 ./app/src/app_it.o
- .debug_str     0x000835eb    0x80931 ./app/src/logger.o
- .debug_str     0x000835eb    0x80c87 ./app/src/task_actuator.o
- .debug_str     0x000835eb    0x80a4c ./app/src/task_actuator_interface.o
- .debug_str     0x000835eb    0x80cd1 ./app/src/task_sensor.o
- .debug_str     0x000835eb    0x80c70 ./app/src/task_system.o
- .debug_str     0x000835eb    0x80a34 ./app/src/task_system_interface.o
+ .debug_str     0x000835d0    0x7d0a0 ./Core/Src/stm32f1xx_hal_msp.o
+ .debug_str     0x000835d0    0x7cc89 ./Core/Src/stm32f1xx_it.o
+ .debug_str     0x000835d0     0x7753 ./Core/Src/sysmem.o
+ .debug_str     0x000835d0    0x7ca82 ./Core/Src/system_stm32f1xx.o
+ .debug_str     0x000835d0       0xad ./Core/Startup/startup_stm32f103rbtx.o
+ .debug_str     0x000835d0    0x7d1b5 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o
+ .debug_str     0x000835d0    0x7d101 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o
+ .debug_str     0x000835d0    0x7ce08 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.o
+ .debug_str     0x000835d0    0x7ceb1 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.o
+ .debug_str     0x000835d0    0x7d522 ./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.o
+ .debug_str     0x000835d0    0x80c3d ./app/src/app.o
+ .debug_str     0x000835d0    0x80908 ./app/src/app_it.o
+ .debug_str     0x000835d0    0x80931 ./app/src/logger.o
+ .debug_str     0x000835d0    0x80c6c ./app/src/task_actuator.o
+ .debug_str     0x000835d0    0x80a31 ./app/src/task_actuator_interface.o
+ .debug_str     0x000835d0    0x80cd1 ./app/src/task_sensor.o
+ .debug_str     0x000835d0    0x80c55 ./app/src/task_system.o
+ .debug_str     0x000835d0    0x80a34 ./app/src/task_system_interface.o
 
 .comment        0x00000000       0x43
  .comment       0x00000000       0x43 ./Core/Src/main.o
